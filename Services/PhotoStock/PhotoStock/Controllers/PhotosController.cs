@@ -24,7 +24,7 @@ namespace PhotoStock.Controllers
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photo.FileName);
 
                 using var stream = new FileStream(path, FileMode.Create);
-                await photo.CopyToAsync(stream, cancellationToken);  //cancellation token eger PhotoSave sonlansa, browseri baglasalar ya cixsalar saytimizdan, bu endpointde ishini dayandirsin save elememsin. exeption atib dayandirir
+                await photo.CopyToAsync(stream, cancellationToken);  
 
                 var returnPath = "photos/" + photo.FileName;
 
@@ -36,7 +36,6 @@ namespace PhotoStock.Controllers
             return CreateActionResultInstance(Response<PhotoDto>.Fail("Photo is empty", 400));
         }
 
-        [HttpPost]
         public IActionResult PhotoDelete(string photoUrl) 
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photoUrl);

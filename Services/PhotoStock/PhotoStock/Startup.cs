@@ -30,13 +30,13 @@ namespace PhotoStock
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
-                options.Audience = "resource_catalog";
+                options.Audience = "photo_stock_catalog";
                 options.RequireHttpsMetadata = false;
             });
 
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(new AuthorizeFilter());  //butun controllara [Authorize] elave edecek. Bir bir hamsina yazmaq lazim deyil
+                opt.Filters.Add(new AuthorizeFilter()); 
             });
 
             services.AddSwaggerGen(c =>
