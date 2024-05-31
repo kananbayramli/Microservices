@@ -5,7 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Services.Basket.Services;
 using Services.Basket.Settings;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,17 @@ namespace Services.Basket
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<RedisSettings>(Configuration.GetSection("RedisSettings"));
+
+
+            services.AddSingleton<RedisService>(sp => 
+            {
+                var redisSetting = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
+                var redis = new RedisService(redisSetting.Host, redisSetting.Port);
+                redis.Connect();
+                return redis;
+            });
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
