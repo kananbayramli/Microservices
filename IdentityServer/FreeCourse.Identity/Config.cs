@@ -13,7 +13,8 @@ namespace FreeCourse.Identity
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
         {
             new ApiResource("resource_catalog"){Scopes={ "catalog_fullpermission" }},
-            new ApiResource("photo_stock_catalog"){Scopes={ "photo_stock_fullpermission" }},
+            new ApiResource("resource_photo_stock"){Scopes={ "photo_stock_fullpermission" }},
+            new ApiResource("resource_basket"){Scopes={ "basket_fullpermission" }},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
 
         };
@@ -32,6 +33,7 @@ namespace FreeCourse.Identity
             {
                 new ApiScope("catalog_fullpermission", "For Catalog API full permission"),
                 new ApiScope("photo_stock_fullpermission", "For Photo Stock API full permission"),
+                new ApiScope("basket_fullpermission", "For Basket API full permission"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -54,7 +56,7 @@ namespace FreeCourse.Identity
                     ClientSecrets = { new Secret("secret".Sha256())},
                     AllowOfflineAccess = true,
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes = {IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName, "roles" },
+                    AllowedScopes = { "basket_fullpermission",IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName, "roles" },
                     AccessTokenLifetime = 1*60*60,
                     RefreshTokenExpiration = TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime = (int) (DateTime.Now.AddDays(60) - DateTime.Now).TotalSeconds,
