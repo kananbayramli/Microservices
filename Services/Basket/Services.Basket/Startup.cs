@@ -61,6 +61,7 @@ namespace Services.Basket
             {
                 opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
             });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Services.Basket", Version = "v1" });
